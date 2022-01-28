@@ -122,6 +122,23 @@ Be prepared to demonstrate your understanding of this week's concepts by answeri
 
 2. What steps can you take in your web apps to keep your data secure?
 
+    > Utilize private routes where authentication is required for every navigation that takes place;
+    > All API calls must be made using authorization headers;
+    > Be sure to encypt sensitive data (e.g. JSON web tokens);
+    > Require that passwords are more lengthy and have special characters included when users are setting up passwords;
+    > Implement 2-factor authentication or multi-factor authentication;
+
 3. Describe how web servers work.
 
+    > Web servers are essentially simple computer programs that provide a web page/data when requested by a web client. In short:
+    i. web browser obtains the IP address of the domain name
+    ii. browser requests the full URL
+    iii. web server responds to the request by sending back webpage/ data (or errors).
+    iv. browser displays the received webpage/ data
+
 4. Which HTTP methods can be mapped to the CRUD acronym that we use when interfacing with APIs/Servers.
+
+    > GET -- read data
+    > POST -- insert data
+    > PUT or PATCH -- update data or insert if a new id is present
+    > DELETE -- delete data
