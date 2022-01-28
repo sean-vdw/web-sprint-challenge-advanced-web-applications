@@ -1,47 +1,76 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import Article from './Article';
 import EditForm from './EditForm';
+
+import axiosWithAuth from '../utils/axiosWithAuth';
 
 const View = (props) => {
     const [articles, setArticles] = useState([]);
     const [editing, setEditing] = useState(false);
     const [editId, setEditId] = useState();
 
+		useEffect(() => {
+			axiosWithAuth().get('/articles')
+				.then(resp => {
+					setArticles(resp.data);
+				})
+				.catch(err => {
+					console.log(err);
+				})
+		}, []);
+
     const handleDelete = (id) => {
+			axiosWithAuth().delete(`/articles/${id}`)
+				.then(resp => {
+					setArticles(resp.data);
+				})
+				.catch(err => {
+					console.log(err);
+				})
     }
 
     const handleEdit = (article) => {
+			axiosWithAuth().put(`/articles/${editId}`, article)
+				.then(resp => {
+					setArticles(resp.data);
+					setEditing(false);
+				})
+				.catch(err => {
+					console.log(err);
+				})
     }
 
-    const handleEditSelect = (id)=> {
-        setEditing(true);
-        setEditId(id);
+    const handleEditSelect = (id) => {
+			setEditing(true);
+			setEditId(id);
     }
 
-    const handleEditCancel = ()=>{
-        setEditing(false);
+    const handleEditCancel = () =>{
+			setEditing(false);
     }
 
-    return(<ComponentContainer>
-        <HeaderContainer>View Articles</HeaderContainer>
-        <ContentContainer flexDirection="row">
-            <ArticleContainer>
-                {
-                    articles.map(article => {
-                        return <ArticleDivider key={article.id}>
-                            <Article key={article.id} article={article} handleDelete={handleDelete} handleEditSelect={handleEditSelect}/>
-                        </ArticleDivider>
-                    })
-                }
-            </ArticleContainer>
-            
-            {
-                editing && <EditForm editId={editId} handleEdit={handleEdit} handleEditCancel={handleEditCancel}/>
-            }
-        </ContentContainer>
-    </ComponentContainer>);
+    return(
+		<ComponentContainer>
+			<HeaderContainer>View Articles</HeaderContainer>
+			<ContentContainer flexDirection="row">
+				<ArticleContainer>
+					{
+						articles.map(article => {
+							return <ArticleDivider key={article.id}>
+								<Article key={article.id} article={article} handleDelete={handleDelete} handleEditSelect={handleEditSelect}/>
+							</ArticleDivider>
+						})
+					}
+				</ArticleContainer>
+				
+				{
+					editing && <EditForm editId={editId} handleEdit={handleEdit} handleEditCancel={handleEditCancel}/>
+				}
+			</ContentContainer>
+    </ComponentContainer>
+	);
 }
 
 export default View;
