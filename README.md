@@ -118,6 +118,8 @@ Be prepared to demonstrate your understanding of this week's concepts by answeri
 
 1. Explain what a token is used for.
 
+    > A token is used as a unique identifier for individual users of an application. This token, being unique, can then be utilized by developers to validate protected routes and security throughout the application.
+
 2. What steps can you take in your web apps to keep your data secure?
 
 3. Describe how web servers work.
